@@ -7,7 +7,9 @@
    </div>
 @endif
     <h1>This is store Page</h1>
+    @can('insert-product')
     <a href="{{ route('product_insert_form') }}" class="btn btn-primary">Insert New Product</a>
+    @endcan
 here we will display all products that are available in the store, and also we will display the product categories that we have in the store
     <div class="row row-cols-1 row-cols-md-3 g-4">
         @foreach ($products as $product)
@@ -20,11 +22,15 @@ here we will display all products that are available in the store, and also we w
                         <p class="card-text"><i>{{ $product->product_category->name }}</i></p>
                         <p class="card-text">Rp{{ number_format($product->price, 2) }}</p>
                         <p class="card-text">{{ $product->details }}</p>
-                        <a href="{{ route('edit_product', $product->id) }}" class="btn btn-warning">Edit Product</a>
+                        @can('edit-product')
+                        <a href="{{ route('product_edit_form', $product->id) }}" class="btn btn-warning">Edit Product</a>
+                        @endcan
                         <!-- Button trigger modal -->
+                        @can('delete-product')
                   <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal{{ $product->id }}">
                      Delete
                   </button>
+                  @endcan
 
                   <!-- Delete Confirmation Modal -->
                   <div class="modal fade" id="deleteModal{{ $product->id }}" tabindex="-1" aria-labelledby="deleteModalLabel{{ $product->id }}" aria-hidden="true">
